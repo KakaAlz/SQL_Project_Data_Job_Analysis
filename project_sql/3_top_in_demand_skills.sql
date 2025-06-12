@@ -37,8 +37,20 @@ LIMIT 5
 
 -- query option 2
 
-SELECT *
-FROM job_postings_fact AS jpf
-INNER JOIN skills_job_dim AS sjd ON jpf.job_id = sjd.job_id
-INNER JOIN skills_dim AS sd ON sjd.skill_id = sd.skill_id
+SELECT 
+    skills AS skill_name,
+    COUNT(sjd.skill_id) AS demand_skills
+FROM 
+    job_postings_fact AS jpf
+INNER JOIN 
+    skills_job_dim AS sjd ON jpf.job_id = sjd.job_id
+INNER JOIN 
+    skills_dim AS sd ON sjd.skill_id = sd.skill_id
+WHERE
+    jpf.job_title_short = 'Data Analyst' AND
+    jpf.job_work_from_home = 'True'
+GROUP BY 
+    skill_name
+ORDER BY 
+    demand_skills DESC
 LIMIT 5

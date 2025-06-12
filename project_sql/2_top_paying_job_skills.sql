@@ -17,7 +17,7 @@ WITH top_paying_jobs AS (
     LEFT JOIN company_dim AS cd ON jpf.company_id = cd.company_id
     WHERE
         job_title_short = 'Data Analyst' AND
-        job_location = 'Anywhere' AND
+        job_work_from_home = 'True' AND
         salary_year_avg IS NOT NULL
     ORDER BY
         salary_year_avg DESC
