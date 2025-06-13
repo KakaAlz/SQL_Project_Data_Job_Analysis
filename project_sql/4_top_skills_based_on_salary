@@ -1,0 +1,26 @@
+/*
+Question : what are the top skill based on salary ?
+- look at the average salary associated with each skill for Data Analyst position
+- Focuses on roles with specified salary, regardless of locatio
+- Why ? it reveals how different skill impact salary level for Data Analyst and help identify
+  the most financially rewarding skills to acquire or improve 
+*/
+
+SELECT 
+    skills AS skill_name,
+    ROUND (AVG(salary_year_avg),2) AS avg_salary
+FROM 
+    job_postings_fact AS jpf
+INNER JOIN 
+    skills_job_dim AS sjd ON jpf.job_id = sjd.job_id
+INNER JOIN 
+    skills_dim AS sd ON sjd.skill_id = sd.skill_id
+WHERE
+    jpf.job_title_short = 'Data Analyst' AND
+    jpf.salary_year_avg IS NOT NULL
+    --jpf.job_work_from_home = 'True'
+GROUP BY 
+    skill_name
+ORDER BY 
+    avg_salary DESC
+LIMIT 25
